@@ -20,9 +20,9 @@ const App = () => {
   };
 
   return (
-    <div className='App'>
+    <div className="App">
       <section>
-        <h1 className='page-title'>Ito | 意図</h1>
+        <h1 className="page-title">Ito | 意図</h1>
         <PlayerNumContext.Provider value={playerNum}>
           <GamePhaseContext.Provider value={gamePhase}>
             <GameSettingTable

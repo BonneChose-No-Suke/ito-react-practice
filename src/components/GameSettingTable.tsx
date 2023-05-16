@@ -22,13 +22,14 @@ export const GameSettingTable = ({
           ? 'プレイヤー人数を選択し、名前を設定してからゲームをスタートしてください。'
           : 'ゲーム中です。'}
       </h4>
-      <div className='playerNumberSetting'>
+      <div className="playerNumberSetting">
         <label>プレイ人数</label>
         <select
-          name='playerNum'
-          id='playerNum'
+          name="playerNum"
+          id="playerNum"
           value={playerNum}
-          onChange={(e) => onChangePlayerNum(Number(e.target.value))}>
+          onChange={(e) => onChangePlayerNum(Number(e.target.value))}
+        >
           {[...Array(15)].map((_, i) => (
             <option key={i + 6} value={i + 6}>
               {i + 6}
@@ -37,9 +38,10 @@ export const GameSettingTable = ({
         </select>
       </div>
       <button
-        className='startButton'
-        type='button'
-        onClick={() => onChangeGamePhase(GamePhase.playing)}>
+        className="startButton"
+        type="button"
+        onClick={() => onChangeGamePhase(GamePhase.playing)}
+      >
         {gamePhase === 'setting' ? 'ゲーム開始' : 'ゲーム設定に戻る'}
       </button>
     </section>
