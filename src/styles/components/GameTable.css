@@ -5,6 +5,12 @@ th {
   border: #444444 1px solid;
 }
 
+.playerNumberSetting {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
 input {
   outline: none;
 }

@@ -1,37 +1,56 @@
 import './App.css';
 import { GameSettingTable } from './components/GameSettingTable';
 import { GameTable } from './components/GameTable';
-import { GamePhase } from './utils/type';
-import { GamePhaseContext, PlayerNumContext } from './utils/contexts';
-import { useState } from 'react';
+import { Player } from './utils/type';
+import { useEffect, useState } from 'react';
 
 const App = () => {
-  const [gamePhase, setGamePhase] = useState<GamePhase>(GamePhase.setting);
-  const [playerNum, setPlayerNum] = useState<number>(6);
+  const [players, setPlayers] = useState<Player[]>([]);
 
-  const passGamePhase = (gamePhase: string) => {
-    gamePhase === GamePhase.playing
-      ? setGamePhase(GamePhase.playing)
-      : console.log('error');
+  const addPlayer = () => {
+    setPlayers((prevPlayers) => {
+      const newPlayer = {
+        name: `Player${prevPlayers.length + 1}`,
+      };
+
+      return [...prevPlayers, newPlayer];
+    });
   };
 
-  const changePlayerNum = (playerNum: number) => {
-    setPlayerNum(playerNum);
+  const deletePlayer = (index: number) => {
+    setPlayers((prevPlayers) => {
+      const newPlayers = [...prevPlayers];
+      newPlayers.splice(index, 1);
+
+      return newPlayers;
+    });
   };
+
+  const changePlayerName = (index: number, name: string) => {
+    const newPlayers = [...players];
+    newPlayers[index].name = name;
+    setPlayers(newPlayers);
+  };
+
+  useEffect(() => {
+    const initialPlayers: Player[] = [...Array(6)].map((_, i) => ({
+      name: `Player${i + 1}`,
+    }));
+
+    setPlayers(initialPlayers);
+  }, []);
 
   return (
     <div className="App">
       <section>
         <h1 className="page-title">Ito | 意図</h1>
-        <PlayerNumContext.Provider value={playerNum}>
-          <GamePhaseContext.Provider value={gamePhase}>
-            <GameSettingTable
-              onChangeGamePhase={passGamePhase}
-              onChangePlayerNum={changePlayerNum}
-            />
-            <GameTable />
-          </GamePhaseContext.Provider>
-        </PlayerNumContext.Provider>
+        <GameSettingTable />
+        <GameTable
+          players={players}
+          onAddPlayer={addPlayer}
+          onDeletePlayer={deletePlayer}
+          onChangePlayerName={changePlayerName}
+        />
       </section>
     </div>
   );
