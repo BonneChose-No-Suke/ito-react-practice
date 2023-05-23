@@ -1,16 +1,21 @@
 import { Player } from '../../utils/type';
+import '../../styles/components/GameBoard/Card.css';
 
 type Props = {
-  key: number;
   player: Player;
-  onCardClick: () => void;
+  onCardClick: (id: number) => void;
 };
 
-export const Card = ({ key, player, onCardClick }: Props) => {
+export const Card = ({ player, onCardClick }: Props) => {
   return (
-    <div className="card" key={key} onClick={onCardClick}>
-      <div className="playerName">{player.name}</div>
-      <div className="playerNum">{player.playerNum}</div>
+    <div className="card" onClick={() => onCardClick(player.id!)}>
+      <div className={`down ${player.card?.isUp ? 'flip' : null}`}>
+        <div className="playerId">{player.id!}</div>
+        <div className="playerName">{player.name}</div>
+      </div>
+      <div className={`up ${player.card?.isUp ? 'flip' : null}`}>
+        <div className="playerNum">{player.card?.playerNum}</div>
+      </div>
     </div>
   );
 };

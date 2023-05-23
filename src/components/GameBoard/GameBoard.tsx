@@ -1,15 +1,19 @@
 import { Player } from '../../utils/type';
 import { Card } from './Card';
+import { useCardFlip } from '../../hooks/useCardFlip';
 
 type Props = {
   players: Player[];
 };
 
 const GameBoard = ({ players }: Props) => {
-  const cardClicked = () => {
+  const { flipCard } = useCardFlip(players);
+
+  const cardClicked = (id: number) => {
     // カードのステータスを変更するHooksを呼び出す
     //consoleは後で消す
-    console.log('card clicked');
+    flipCard(id);
+    console.log(players);
   };
 
   return (
