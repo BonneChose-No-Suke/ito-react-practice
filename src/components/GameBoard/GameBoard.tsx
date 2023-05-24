@@ -10,8 +10,9 @@ const GameBoard = ({ players }: Props) => {
       <div className="cardField">
         {players.map((player, key) => (
           <div className="card" key={key}>
+            <div className="playerId">{player.id ?? ''}</div>
             <div className="playerName">{player.name}</div>
-            <div className="playerNum">{player.playerNum}</div>
+            <div className="playerNum">{player.playerNum ?? ''}</div>
           </div>
         ))}
       </div>
