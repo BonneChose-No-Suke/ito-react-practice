@@ -1,6 +1,6 @@
 import { useContext, useEffect, useReducer, useState } from 'react';
 import { GamePhaseReducer } from './GamePhaseReducer';
-import { GamePhase, Player } from '../utils/type';
+import { Player } from '../utils/type';
 import { GamePhaseContext } from '../utils/contexts';
 
 export const useGamePhase = () => {

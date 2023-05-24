@@ -1,16 +1,11 @@
 import './App.css';
 import { GameSettingTable } from './components/GameSettingTable';
 import { GameTable } from './components/GameTable';
-import { GamePhaseReducer } from './hooks/GamePhaseReducer';
 import { useGamePhase } from './hooks/useGamePhase';
-import { GamePhaseContext } from './utils/contexts';
 import { Player } from './utils/type';
-import { useContext, useEffect, useReducer, useState } from 'react';
+import { useEffect } from 'react';
 
 const App = () => {
-  // const [players, setPlayers] = useState<Player[]>([]);
-  // const currentGamePhase = useContext(GamePhaseContext);
-  // const [gamePhase, dispatch] = useReducer(GamePhaseReducer, currentGamePhase);
   const { start, players, setPlayers, gamePhase } = useGamePhase();
 
   const addPlayer = () => {
@@ -43,10 +38,6 @@ const App = () => {
 
   // ゲーム開始を直書き、useGamePhaseに移行したい
   const starGame = () => {
-    // const randomNumbers = setUniqueRandomNum(players);
-    // const gamePlayers = setRandomNumToPlayers(players, randomNumbers);
-
-    // dispatch({ type: 'start' });
     const { players } = start();
 
     setPlayers(players);
@@ -77,22 +68,3 @@ const App = () => {
 };
 
 export default App;
-
-const setRandomNumToPlayers = (players: Player[], randomNumbers: number[]) => {
-  return players.map((player, index) => {
-    player.id = index;
-    player.playerNum = randomNumbers[index];
-    return player;
-  });
-};
-
-const setUniqueRandomNum = (players: Player[]) => {
-  const randomNumbers = [];
-  while (randomNumbers.length < players.length) {
-    const randomNum = Math.floor(Math.random() * 100) + 1;
-    if (randomNumbers.indexOf(randomNum) === -1) {
-      randomNumbers.push(randomNum);
-    }
-  }
-  return randomNumbers;
-};
