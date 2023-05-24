@@ -1,11 +1,14 @@
 import './App.css';
 import { GameSettingTable } from './components/GameSettingTable';
 import { GameTable } from './components/GameTable';
+import { useGamePhase } from './hooks/useGamePhase';
 import { Player } from './utils/type';
 import { useEffect, useState } from 'react';
 
 const App = () => {
   const [players, setPlayers] = useState<Player[]>([]);
+
+  const { start, gamePhase } = useGamePhase(players, setPlayers);
 
   const addPlayer = () => {
     setPlayers((prevPlayers) => {
@@ -27,9 +30,12 @@ const App = () => {
   };
 
   const changePlayerName = (index: number, name: string) => {
-    const newPlayers = [...players];
-    newPlayers[index].name = name;
-    setPlayers(newPlayers);
+    setPlayers((prevPlayers) => {
+      const newPlayers = [...prevPlayers];
+      newPlayers[index].name = name;
+
+      return newPlayers;
+    });
   };
 
   // TODO: カードをめくる処理を実装する
@@ -42,11 +48,19 @@ const App = () => {
     setPlayers(newPlayers);
   };
 
-  useEffect(() => {
-    const initialPlayers: Player[] = [...Array(6)].map((_, i) => ({
-      name: `Player${i + 1}`,
-    }));
+  // ゲーム開始を直書き、useGamePhaseに移行したい
+  const starGame = () => {
+    const { players } = start();
 
+    setPlayers(players);
+  };
+
+  useEffect(() => {
+    const initialPlayers = [...Array(6)].map((_, index) => {
+      return {
+        name: `player${index + 1}`,
+      };
+    });
     setPlayers(initialPlayers);
   }, []);
 
@@ -54,7 +68,7 @@ const App = () => {
     <div className="App">
       <section>
         <h1 className="page-title">Ito | 意図</h1>
-        <GameSettingTable />
+        <GameSettingTable onGameStart={starGame} gamePhase={gamePhase} />
         <GameTable
           players={players}
           onAddPlayer={addPlayer}
