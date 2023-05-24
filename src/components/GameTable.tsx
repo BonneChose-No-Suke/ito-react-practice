@@ -10,6 +10,7 @@ type Props = {
   onAddPlayer: () => void;
   onDeletePlayer: (index: number) => void;
   onChangePlayerName: (index: number, name: string) => void;
+  onCardClick: (index: number) => void;
 };
 
 export const GameTable = ({
@@ -17,6 +18,7 @@ export const GameTable = ({
   onAddPlayer,
   onDeletePlayer,
   onChangePlayerName,
+  onCardClick,
 }: Props) => {
   const gamePhase: GamePhase = useContext(GamePhaseContext);
 
@@ -28,7 +30,7 @@ export const GameTable = ({
         onDeletePlayer={onDeletePlayer}
         onChangePlayerName={onChangePlayerName}
       />
-      <GameBoard players={players} />
+      <GameBoard players={players} onCardClick={onCardClick} />
     </>
   );
 };
