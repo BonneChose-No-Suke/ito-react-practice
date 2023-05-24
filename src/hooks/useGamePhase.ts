@@ -1,25 +1,36 @@
-import { useContext, useReducer, useState } from 'react';
+import { useContext, useEffect, useReducer, useState } from 'react';
 import { GamePhaseReducer } from './GamePhaseReducer';
 import { GamePhase, Player } from '../utils/type';
 import { GamePhaseContext } from '../utils/contexts';
 
-export const useGamePhase = (prevPlayers: Player[], action: string) => {
-  const gamePhase = useContext(GamePhaseContext);
-  const [currentGamePhase, dispatch] = useReducer(GamePhaseReducer, gamePhase);
-  const [players, setPlayers] = useState<Player[]>(prevPlayers);
+export const useGamePhase = () => {
+  const currentGamePhase = useContext(GamePhaseContext);
+  const [gamePhase, dispatch] = useReducer(GamePhaseReducer, currentGamePhase);
+  const [players, setPlayers] = useState<Player[]>([]);
 
-  const randomNumbers = setUniqueRandomNum(prevPlayers);
-  const gamePlayers = setRandomNumToPlayers(prevPlayers, randomNumbers);
+  useEffect(() => {
+    const initialPlayers = [...Array(6)].map((_, index) => {
+      return {
+        name: `player${index + 1}`,
+      };
+    });
+    setPlayers(initialPlayers);
+  }, []);
 
-  dispatch({ type: action });
+  const start = () => {
+    const randomNumbers = setUniqueRandomNum(players);
+    const gamePlayers = setRandomNumToPlayers(players, randomNumbers);
 
-  setPlayers(gamePlayers);
+    setPlayers(gamePlayers);
 
-  console.log(gamePhase, players);
+    dispatch({ type: 'start' });
+
+    return { players };
+  };
 
   // ゲーム終了にオプションを持たせたい(今後の検討)
 
-  return { gamePlayers, currentGamePhase };
+  return { start, players, setPlayers, gamePhase };
 };
 
 const setRandomNumToPlayers = (players: Player[], randomNumbers: number[]) => {
@@ -33,7 +44,7 @@ const setRandomNumToPlayers = (players: Player[], randomNumbers: number[]) => {
 const setUniqueRandomNum = (players: Player[]) => {
   const randomNumbers = [];
   while (randomNumbers.length < players.length) {
-    const randomNum = Math.floor(Math.random() * players.length) + 1;
+    const randomNum = Math.floor(Math.random() * 100) + 1;
     if (randomNumbers.indexOf(randomNum) === -1) {
       randomNumbers.push(randomNum);
     }

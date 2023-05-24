@@ -2,14 +2,16 @@ import './App.css';
 import { GameSettingTable } from './components/GameSettingTable';
 import { GameTable } from './components/GameTable';
 import { GamePhaseReducer } from './hooks/GamePhaseReducer';
+import { useGamePhase } from './hooks/useGamePhase';
 import { GamePhaseContext } from './utils/contexts';
 import { Player } from './utils/type';
 import { useContext, useEffect, useReducer, useState } from 'react';
 
 const App = () => {
-  const [players, setPlayers] = useState<Player[]>([]);
-  const currentGamePhase = useContext(GamePhaseContext);
-  const [gamePhase, dispatch] = useReducer(GamePhaseReducer, currentGamePhase);
+  // const [players, setPlayers] = useState<Player[]>([]);
+  // const currentGamePhase = useContext(GamePhaseContext);
+  // const [gamePhase, dispatch] = useReducer(GamePhaseReducer, currentGamePhase);
+  const { start, players, setPlayers, gamePhase } = useGamePhase();
 
   const addPlayer = () => {
     setPlayers((prevPlayers) => {
@@ -41,12 +43,13 @@ const App = () => {
 
   // ゲーム開始を直書き、useGamePhaseに移行したい
   const starGame = () => {
-    const randomNumbers = setUniqueRandomNum(players);
-    const gamePlayers = setRandomNumToPlayers(players, randomNumbers);
+    // const randomNumbers = setUniqueRandomNum(players);
+    // const gamePlayers = setRandomNumToPlayers(players, randomNumbers);
 
-    dispatch({ type: 'start' });
+    // dispatch({ type: 'start' });
+    const { players } = start();
 
-    setPlayers(gamePlayers);
+    setPlayers(players);
   };
 
   useEffect(() => {
