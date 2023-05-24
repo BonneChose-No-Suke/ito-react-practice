@@ -1,21 +1,14 @@
-import { useContext, useEffect, useReducer, useState } from 'react';
+import { useContext, useReducer } from 'react';
 import { GamePhaseReducer } from './GamePhaseReducer';
 import { Player } from '../utils/type';
 import { GamePhaseContext } from '../utils/contexts';
 
-export const useGamePhase = () => {
+export const useGamePhase = (
+  players: Player[],
+  setPlayers: (players: Player[]) => void
+) => {
   const currentGamePhase = useContext(GamePhaseContext);
   const [gamePhase, dispatch] = useReducer(GamePhaseReducer, currentGamePhase);
-  const [players, setPlayers] = useState<Player[]>([]);
-
-  useEffect(() => {
-    const initialPlayers = [...Array(6)].map((_, index) => {
-      return {
-        name: `player${index + 1}`,
-      };
-    });
-    setPlayers(initialPlayers);
-  }, []);
 
   const start = () => {
     const randomNumbers = setUniqueRandomNum(players);
@@ -35,7 +28,7 @@ export const useGamePhase = () => {
 
 const setRandomNumToPlayers = (players: Player[], randomNumbers: number[]) => {
   return players.map((player, index) => {
-    player.id = index;
+    player.id = index + 1;
     player.playerNum = randomNumbers[index];
     return player;
   });

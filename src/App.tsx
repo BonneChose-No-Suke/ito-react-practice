@@ -3,10 +3,12 @@ import { GameSettingTable } from './components/GameSettingTable';
 import { GameTable } from './components/GameTable';
 import { useGamePhase } from './hooks/useGamePhase';
 import { Player } from './utils/type';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const App = () => {
-  const { start, players, setPlayers, gamePhase } = useGamePhase();
+  const [players, setPlayers] = useState<Player[]>([]);
+
+  const { start, gamePhase } = useGamePhase(players, setPlayers);
 
   const addPlayer = () => {
     setPlayers((prevPlayers) => {
@@ -44,10 +46,11 @@ const App = () => {
   };
 
   useEffect(() => {
-    const initialPlayers: Player[] = [...Array(6)].map((_, i) => ({
-      name: `Player${i + 1}`,
-    }));
-
+    const initialPlayers = [...Array(6)].map((_, index) => {
+      return {
+        name: `player${index + 1}`,
+      };
+    });
     setPlayers(initialPlayers);
   }, []);
 

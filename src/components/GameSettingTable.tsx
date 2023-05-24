@@ -6,7 +6,7 @@ type Props = {
   onGameStart: () => void;
 };
 
-export const GameSettingTable = ({ gamePhase, onGameStart }: Props) => {
+export const GameSettingTable = ({ onGameStart }: Props) => {
   return (
     <section>
       <h4>
