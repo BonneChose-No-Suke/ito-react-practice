@@ -1,19 +1,17 @@
 import { Player } from '../../utils/type';
+import { Card } from './Card';
 
 type Props = {
   players: Player[];
+  onCardClick: (index: number) => void;
 };
 
-const GameBoard = ({ players }: Props) => {
+const GameBoard = ({ players, onCardClick }: Props) => {
   return (
     <section>
       <div className="cardField">
         {players.map((player, key) => (
-          <div className="card" key={key}>
-            <div className="playerId">{player.id ?? ''}</div>
-            <div className="playerName">{player.name}</div>
-            <div className="playerNum">{player.playerNum ?? ''}</div>
-          </div>
+          <Card key={key} player={player} onCardClick={onCardClick} />
         ))}
       </div>
     </section>

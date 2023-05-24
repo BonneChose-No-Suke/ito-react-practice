@@ -13,7 +13,7 @@ export const GameSettingTable = ({ gamePhase, onGameStart }: Props) => {
         プレイヤー人数を選択し、名前を設定してからゲームをスタートしてください。
       </h4>
       <button
-        className={`startButton ${gamePhase !== 'setting' && 'disabled'}`}
+        className="startButton"
         type="button"
         disabled={gamePhase !== 'setting'}
         onClick={onGameStart}

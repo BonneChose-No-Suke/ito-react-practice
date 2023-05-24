@@ -1,7 +1,10 @@
 export interface Player {
   id?: number;
   name: string;
-  playerNum?: number;
+  card: {
+    playerNum?: number;
+    isUp?: boolean;
+  };
 }
 
 export enum GamePhase {

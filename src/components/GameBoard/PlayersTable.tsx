@@ -1,8 +1,9 @@
-import { Player } from '../../utils/type';
+import { GamePhase, Player } from '../../utils/type';
 import { PlayerColumn } from './PlayerColumn';
 
 type Props = {
   players: Player[];
+  gamePhase: GamePhase;
   onAddPlayer: () => void;
   onDeletePlayer: (index: number) => void;
   onChangePlayerName: (index: number, name: string) => void;
@@ -10,6 +11,7 @@ type Props = {
 
 const PlayersTable = ({
   players,
+  gamePhase,
   onAddPlayer,
   onDeletePlayer,
   onChangePlayerName,
@@ -33,7 +35,11 @@ const PlayersTable = ({
       </div>
       <div className="addPlayer">
         <p>{players.length}</p>
-        <button type="button" onClick={() => onAddPlayer()}>
+        <button
+          type="button"
+          onClick={() => onAddPlayer()}
+          disabled={gamePhase !== GamePhase.setting}
+        >
           プレイヤー追加
         </button>
       </div>

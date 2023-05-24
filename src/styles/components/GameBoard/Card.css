@@ -1,0 +1,32 @@
+.card {
+  position: relative;
+  width: 25%;
+  height: 175px;
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: #fff;
+  margin: 10px;
+  float: left;
+  transform-style: preserve-3d;
+  transition: transform 0.8s;
+}
+
+/* カード裏面・表面の共通スタイル */
+.card .down,
+.card .up {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  backface-visibility: hidden;
+}
+
+/* カード表面のスタイル */
+.card .up {
+  transform: rotateY(-180deg);
+}
+
+.flip {
+  transform: rotateY(180deg);
+}

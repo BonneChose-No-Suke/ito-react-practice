@@ -7,28 +7,33 @@ import PlayersTable from './GameBoard/PlayersTable';
 
 type Props = {
   players: Player[];
+  gamePhase: GamePhase;
   onAddPlayer: () => void;
   onDeletePlayer: (index: number) => void;
   onChangePlayerName: (index: number, name: string) => void;
+  onCardClick: (index: number) => void;
 };
 
 export const GameTable = ({
   players,
+  gamePhase,
   onAddPlayer,
   onDeletePlayer,
   onChangePlayerName,
+  onCardClick,
 }: Props) => {
-  const gamePhase: GamePhase = useContext(GamePhaseContext);
-
   return (
     <>
       <PlayersTable
         players={players}
+        gamePhase={gamePhase}
         onAddPlayer={onAddPlayer}
         onDeletePlayer={onDeletePlayer}
         onChangePlayerName={onChangePlayerName}
       />
-      <GameBoard players={players} />
+      {gamePhase === GamePhase.playing && (
+        <GameBoard players={players} onCardClick={onCardClick} />
+      )}
     </>
   );
 };

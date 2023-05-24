@@ -14,6 +14,7 @@ const App = () => {
     setPlayers((prevPlayers) => {
       const newPlayer = {
         name: `Player${prevPlayers.length + 1}`,
+        card: {},
       };
 
       return [...prevPlayers, newPlayer];
@@ -38,6 +39,16 @@ const App = () => {
     });
   };
 
+  // TODO: カードをめくる処理を実装する
+  // Hooksに切り出したいが一旦直書き
+  const cardClicked = (id: number) => {
+    const newPlayers = [...players];
+    if (newPlayers[id - 1].card !== undefined) {
+      newPlayers[id - 1].card.isUp = !newPlayers[id - 1].card?.isUp;
+    }
+    setPlayers(newPlayers);
+  };
+
   // ゲーム開始を直書き、useGamePhaseに移行したい
   const starGame = () => {
     const { players } = start();
@@ -49,6 +60,7 @@ const App = () => {
     const initialPlayers = [...Array(6)].map((_, index) => {
       return {
         name: `player${index + 1}`,
+        card: {},
       };
     });
     setPlayers(initialPlayers);
@@ -61,9 +73,11 @@ const App = () => {
         <GameSettingTable onGameStart={starGame} gamePhase={gamePhase} />
         <GameTable
           players={players}
+          gamePhase={gamePhase}
           onAddPlayer={addPlayer}
           onDeletePlayer={deletePlayer}
           onChangePlayerName={changePlayerName}
+          onCardClick={cardClicked}
         />
       </section>
     </div>

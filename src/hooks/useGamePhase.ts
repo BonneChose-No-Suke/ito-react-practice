@@ -29,7 +29,8 @@ export const useGamePhase = (
 const setRandomNumToPlayers = (players: Player[], randomNumbers: number[]) => {
   return players.map((player, index) => {
     player.id = index + 1;
-    player.playerNum = randomNumbers[index];
+    player.card.playerNum = randomNumbers[index];
+    player.card.isUp = false;
     return player;
   });
 };
