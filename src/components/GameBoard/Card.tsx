@@ -9,7 +9,7 @@ type Props = {
 export const Card = ({ player, onCardClick }: Props) => {
   return (
     <div
-      className={`card ${!player.card?.isUp ? null : 'flip'}`}
+      className={`card ${!player.card.isUp ? null : 'flip'}`}
       onClick={() => onCardClick(player.id!)}
     >
       <div className="down">
@@ -17,7 +17,7 @@ export const Card = ({ player, onCardClick }: Props) => {
         <div className="playerName">{player.name}</div>
       </div>
       <div className="up">
-        <div className="playerNum">{player.card?.playerNum}</div>
+        <div className="playerNum">{player.card.playerNum}</div>
       </div>
     </div>
   );

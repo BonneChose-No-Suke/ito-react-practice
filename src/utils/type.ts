@@ -1,9 +1,9 @@
 export interface Player {
   id?: number;
   name: string;
-  card?: {
-    playerNum: number;
-    isUp: boolean;
+  card: {
+    playerNum?: number;
+    isUp?: boolean;
   };
 }
 
